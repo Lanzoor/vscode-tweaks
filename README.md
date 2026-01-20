@@ -32,6 +32,7 @@ cd ~/vscode-tweaks
 git clone https://github.com/Lanzoor/vscode-tweaks.git
 
 npm install # Install the required packages for the server
+npx tsc
 npm start # Start the server!
 ```
 
@@ -148,6 +149,8 @@ cd ~/vscode-tweaks
 git pull
 
 npm install # Maybe re-install the packages again
+npx tsc
+npm start
 ```
 
 On Windows, you might have to download the files manually on GitHub. Head to 👉 [https://github.com/Lanzoor/vscode-tweaks/releases/latest/](https://github.com/Lanzoor/vscode-tweaks/releases/latest/) Then click **Source Code (zip)** to download the source code. Unzip it, and replace the old files.
