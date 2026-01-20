@@ -105,7 +105,7 @@ Object.assign(modalWelcomeSeparator.style, {
 });
 modalContainer.appendChild(modalWelcomeSeparator);
 
-const modalInfoDesc = `VSCode improvements and visuals by Lanzoor.<br>Make sure to turn the NodeJS server on for the full experience.<br>Do note that updates disable the modifications, so refresh styles after a VSCode update!<br><b>Press CTRL+ALT+H to hide all overlays.</b><br><b><i>Good luck, and have fun!</b></i>`;
+const modalInfoDesc = `VSCode improvements and visuals by Lanzoor.<br>Make sure to turn the NodeJS server on for the full experience.<br>Do note that updates disable the modifications, so refresh styles after a VSCode update!<br><b>Press CTRL+ALT+H to hide all overlays.</b><br><br><b><i>Good luck, and have fun! :D</b></i>`;
 
 const modalInfoText = new ModalText('20px', { left: '10vw', top: 'calc(35vh + 80px + 90px)' }, 'rgba(193, 162, 252, 1)', modalInfoDesc, { lineHeight: '1.3' });
 modalInfoText.appendChild();
@@ -146,9 +146,9 @@ const circle2 = new Circle('75vw', 'rgba(126, 83, 206, 0.4)');
 circle1.display();
 circle2.display();
 
-function getBrightness(hour: number): number {
-    type BrightnessPoint = { hour: number; brightness: number };
+type BrightnessPoint = { hour: number; brightness: number };
 
+function getBrightness(hour: number): number {
     const brightnessCurve: BrightnessPoint[] = [
         { hour: 0, brightness: 0.75 },
         { hour: 3, brightness: 0.8 },
@@ -161,6 +161,7 @@ function getBrightness(hour: number): number {
         { hour: 24, brightness: 0.75 },
     ];
 
+    // !
     let prev: BrightnessPoint = brightnessCurve[0]!;
     let next: BrightnessPoint = brightnessCurve[brightnessCurve.length - 1]!;
 

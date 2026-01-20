@@ -139,20 +139,18 @@ class Overlay {
             this.createDesc();
         }
 
-        this.applyAccent(accent);
+        this.setAccent(accent);
         this.bindAnimations();
     }
 
     setAccent(accent: Accent) {
-        this.applyAccent(accent);
-    }
-
-    applyAccent(accent: Accent) {
-        this.accent = accent;
-        this.obj.style.background = accent.dim;
-        this.obj.style.border = `1px solid ${accent.solid}`;
-        this.obj.style.color = accent.solid;
-        this.obj.style.boxShadow = `0 0 20px ${accent.solid}`;
+        if (accent != this.accent) {
+            this.accent = accent;
+            this.obj.style.background = accent.dim;
+            this.obj.style.border = `1px solid ${accent.solid}`;
+            this.obj.style.color = accent.solid;
+            this.obj.style.boxShadow = `0 0 20px ${accent.solid}`;
+        }
     }
 
     setText(text: string) {
@@ -283,6 +281,7 @@ function bounceLine() {
         position = 0;
     }
     line.style.left = `${position}px`;
+
     requestAnimationFrame(bounceLine);
 }
 
@@ -323,9 +322,8 @@ const keyOverlay = new Overlay({
 keyOverlay.obj.style.border = `1px solid hsl(${keyCountHue}, 100%, 60%)`;
 keyOverlay.obj.style.backgroundColor = `hsla(${keyCountHue}, 100%, 60%, 0.3)`;
 keyOverlay.obj.style.boxShadow = `0 0 20px hsl(${keyCountHue}, 100%, 60%)`;
-keyOverlay.start(updateKeyOverlay);
-
 keyOverlay.textEl.style.color = `hsl(${keyCountHue}, 100%, 100%)`;
+keyOverlay.start(updateKeyOverlay);
 
 document.addEventListener('keydown', () => {
     keyOverlay.obj.style.transition = 'none';
@@ -394,7 +392,7 @@ function updateServer() {
         });
 }
 
-setInterval(updateServer, 1000);
+setInterval(updateServer, 500);
 updateServer();
 
 function updateServerContent() {
@@ -411,6 +409,9 @@ Uptime: ${serverUptime}
         serverOverlay.setDescHTML(serverOfflinePrompt);
     }
 }
+
+setInterval(updateServerContent, 500);
+updateServerContent();
 
 serverOverlay.obj.addEventListener('mousedown', () => {
     updateServer();
@@ -445,7 +446,7 @@ function updateLocation() {
 setTimeout(() => {
     updateLocation();
     setInterval(updateLocation, 50000);
-}, 1000);
+}, 1500);
 
 const weatherDescriptions = {
     0: 'Clear sky',
@@ -556,7 +557,7 @@ function updateWeather() {
 
 setTimeout(() => {
     updateWeather();
-    setInterval(updateWeather, 10000);
+    setInterval(updateWeather, 20000);
 }, 1500);
 
 let weatherOverlayHover = false;
@@ -597,6 +598,9 @@ function updateWeatherContent() {
     }
 }
 
+setInterval(updateWeatherContent, 500);
+updateWeatherContent();
+
 weatherOverlay.obj.addEventListener('mousedown', () => {
     updateWeather();
     updateWeatherStatus();
@@ -631,12 +635,8 @@ function updatePing() {
     }
 }
 
-setTimeout(() => {
-    updatePing();
-    setInterval(updatePing, 1000);
-}, 1000);
-
-let pingOverlayHover = false;
+setInterval(updatePing, 500);
+updatePing();
 
 function updatePingStatus() {
     const pingSuccess = serverOnline && githubLatency != null && googleLatency != null && selfLatency != null;
@@ -664,6 +664,9 @@ function updatePingContent() {
         pingOverlay.setDescHTML(serverFailPrompt);
     }
 }
+
+setInterval(updatePingContent, 500);
+updatePingContent();
 
 pingOverlay.obj.addEventListener('mouseenter', () => {
     pingOverlay.setText(`▼ Hide Ping`);
@@ -712,7 +715,7 @@ Object.assign(levelProgress.style, {
     height: '100%',
     width: '0%',
     borderRadius: '5px',
-    transition: 'width 0.2s ease',
+    transition: 'width 10s ease',
     zIndex: '20001',
     pointerEvents: 'none',
 });
@@ -722,7 +725,6 @@ Object.assign(levelProgressLine.style, {
     left: '0',
     height: '100%',
     width: '2px',
-    borderRadius: '5px',
     transition: 'left 0.2s ease',
     zIndex: '20003',
     pointerEvents: 'none',
@@ -777,10 +779,11 @@ function updateLevelColor() {
     levelOverlay.style.backgroundColor = `hsla(${levelHue}, 100%, 50%, 0.15)`;
     levelOverlay.style.borderColor = `hsl(${levelHue}, 100%, 90%)`;
     levelOverlay.style.boxShadow = `0 0 10px hsl(${levelHue}, 100%, 50%), inset 0 0 10px hsl(${levelHue}, 100%, 50%)`;
-    levelProgress.style.backgroundColor = `hsla(${levelHue}, 100%, 50%, 0.25)`;
-    levelProgress.style.boxShadow = `0 0 5px hsl(${levelHue}, 100%, 50%), inset 0 0 5px hsl(${levelHue}, 100%, 50%)`;
+    levelProgress.style.backgroundColor = `hsla(${levelHue}, 100%, 50%, 0.3)`;
+    levelProgress.style.boxShadow = `0 0 10px hsl(${levelHue}, 100%, 50%), inset 0 0 5px hsl(${levelHue}, 100%, 75%)`;
     levelProgressLine.style.backgroundColor = `hsl(${levelHue}, 100%, 90%)`;
     levelProgressLine.style.boxShadow = `0 0 10px hsl(${levelHue}, 100%, 50%)`;
+
     requestAnimationFrame(updateLevelColor);
 }
 
@@ -803,7 +806,7 @@ Object.assign(fpsDisplay.style, {
 
 document.body.appendChild(fpsDisplay);
 
-function loop() {
+function updateFPSLoop() {
     const now = performance.now();
     frameCount++;
     if (now - lastUpdateTime >= 250) {
@@ -812,22 +815,23 @@ function loop() {
         fpsDisplay.textContent = `${fps} FPS`;
         if (fps <= 30) {
             fpsDisplay.style.color = Colors.solidRed;
-            fpsDisplay.style.textShadow = `0 0 10px ${Colors.lightRed}`;
+            fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightRed}`;
         } else if (fps > 30 && fps <= 45) {
             fpsDisplay.style.color = Colors.solidYellow;
-            fpsDisplay.style.textShadow = `0 0 10px ${Colors.lightYellow}`;
+            fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightYellow}`;
         } else {
             fpsDisplay.style.color = Colors.solidGreen;
-            fpsDisplay.style.textShadow = `0 0 10px ${Colors.lightGreen}`;
+            fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightGreen}`;
         }
         frameCount = 0;
         lastUpdateTime = now;
     }
     lastFrameTime = now;
-    requestAnimationFrame(loop);
+
+    requestAnimationFrame(updateFPSLoop);
 }
 
-requestAnimationFrame(loop);
+requestAnimationFrame(updateFPSLoop);
 
 let modalVisibility = true;
 
