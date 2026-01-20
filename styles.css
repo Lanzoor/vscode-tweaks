@@ -3,13 +3,22 @@
     top: -6px !important;
 }
 
+.monaco-editor .highlight {
+    animation: blurpleGlow 10s infinite ease !important;
+}
+
 .monaco-workbench .tab.active {
     box-shadow: inset 0 0 10px #999999 !important;
     border: 0 0 2px rgba(255, 255, 255, 0.25) !important;
-    border-radius: 10px !important;
+    border-radius: 5px !important;
     text-shadow: 0 0 10px currentColor !important;
     transition: box-shadow 0.2s !important;
-    background: linear-gradient(110deg, #171726, #7a7a7a);
+    background: linear-gradient(110deg, #171726, #7a7a7a) !important;
+}
+
+.monaco-workbench .tab:hover {
+    box-shadow: inset 0 0 10px #bcbcbc !important;
+    transition: box-shadow 0.2s ease !important;
 }
 
 .monaco-workbench .tab.active:hover {
@@ -49,13 +58,13 @@
 
 .monaco-tree .monaco-tree-row .label-name,
 .monaco-list .monaco-list-row .monaco-icon-label .label-name {
-    font-family: 'FiraCode Nerd Font', monospace !important;
+    font-family: 'FiraCode Nerd Font', 'JetBrains Mono', Consolas, monospace !important;
     font-weight: 400 !important;
     font-size: 15px !important;
 }
 
 .explorer-item-edited {
-    font-family: 'FiraCode Nerd Font', monospace !important;
+    font-family: 'FiraCode Nerd Font', 'JetBrains Mono', Consolas, monospace !important;
     font-size: 15px !important;
     font-style: italic !important;
 }
@@ -75,7 +84,8 @@
 .composite.title h2 {
     font-weight: bold !important;
     font-size: 12px !important;
-    color: #bc9abc !important;
+    color: #ffcfff !important;
+    text-shadow: 0 0 25px #cb29c8 !important;
 }
 
 .slider {
@@ -86,6 +96,14 @@
     left: auto !important;
     box-shadow: 0 0 25px #a132a1 !important;
     border-radius: 25px;
+    transition:
+        box-shadow 0.2s ease,
+        width 0.4s ease !important;
+}
+
+.slider:hover {
+    box-shadow: 0 0 35px #ff4eff !important;
+    width: 12px !important;
 }
 
 .monaco-editor .cursor {
@@ -119,7 +137,7 @@
 }
 
 .search-label {
-    font-family: 'FiraCode Nerd Font', monospace !important;
+    font-family: 'FiraCode Nerd Font', 'JetBrains Mono', Consolas, monospace !important;
     font-size: 14px !important;
 }
 
@@ -160,7 +178,7 @@
     border-radius: 12px !important;
     padding: 16px !important;
     border: none !important;
-    font-family: 'FiraCode Nerd Font', monospace !important;
+    font-family: 'FiraCode Nerd Font', 'JetBrains Mono', Consolas, monospace !important;
     font-size: 16px !important;
     margin-bottom: 16px !important;
 }
@@ -217,31 +235,4 @@
 
 .highlight-glow {
     animation: highlightGlow 5s infinite ease;
-}
-
-.monaco-editor .highlight {
-    animation: blurpleGlow 5s infinite ease;
-}
-
-@keyframes monochromeGlow {
-    0% {
-        color: rgb(50, 50, 50);
-        text-shadow: 0 0 10px rgb(50, 50, 50);
-    }
-    25% {
-        color: rgb(102.5, 102.5, 102.5);
-        text-shadow: 0 0 10px rgb(102.5, 102.5, 102.5);
-    }
-    50% {
-        color: rgb(255, 255, 255);
-        text-shadow: 0 0 10px rgb(255, 255, 255);
-    }
-    75% {
-        color: rgb(102.5, 102.5, 102.5);
-        text-shadow: 0 0 10px rgb(102.5, 102.5, 102.5);
-    }
-    100% {
-        color: rgb(50, 50, 50);
-        text-shadow: 0 0 10px rgb(50, 50, 50);
-    }
 }
