@@ -1,6 +1,6 @@
 # 🎨✨ Welcome to VSCode Tweaks! ✨🎨
 
-Hey there! 👋 Ready to supercharge your VSCode with **beautiful effects, animations, and overlays** that’ll make your editor come alive? Let’s get your VSCode looking absolutely aesthetic. Follow along! It gets a bit manual, but I promise - it will be worth it!
+Hey there! 👋 Ready to supercharge your VSCode with **effects, animations, and overlays** that’ll make your editor come alive? Let’s get your VSCode looking absolutely aesthetic. Follow along! It gets a bit manual, but I promise - it will be worth it!
 
 **Make sure to read this till the end, because there are lot's of FAQs you might need to consider!**
 
@@ -22,18 +22,18 @@ code --install-extension be5invis.vscode-custom-css
 
 ---
 
-## 📦 Step 2 - Download the VSCode Overlays
+## 📦 Step 2 - Download the VSCode Tweaks
 
 ### 🐧 On Linux:
 
 ```sh
-cd ~/Downloads
-git clone https://github.com/Lanzoor/vscode-overlays.git
+mkdir ~/vscode-tweaks
+git clone https://github.com/Lanzoor/vscode-tweaks.git
 ```
 
 ### 🪟 On Windows:
 
-Head to 👉 [https://github.com/Lanzoor/vscode-overlays/releases/latest/](https://github.com/Lanzoor/vscode-overlays/releases/latest/) Then click **Source Code (zip)** to download the source code. Unzip it somewhere comfy - like your Downloads folder!
+Head to 👉 [https://github.com/Lanzoor/vscode-tweaks/releases/latest/](https://github.com/Lanzoor/vscode-tweaks/releases/latest/) Then click **Source Code (zip)** to download the source code. Unzip it somewhere comfy, like your Downloads folder! (`C:/Users/{YOUR USERNAME}/Downloads`)
 
 ---
 
@@ -45,7 +45,17 @@ Add the following entries to your `settings.json` file! Make sure to tweak the l
 
 ```json
 {
-    "vscode_custom_css.imports": ["file:///home/{YOUR USERNAME}/Downloads/vscode-overlays/styles.css", "file:///home/{YOUR USERNAME}/Downloads/vscode-overlays/overlays.js", "file:///home/{YOUR USERNAME}/Downloads/vscode-overlays/modals.js", "file:///home/{YOUR USERNAME}/vscode-overlays/mouseeffects.js"]
+    "vscode_custom_css.imports": [
+        // GLOBAL FILE: ALWAYS NEEDS TO BE FIRST
+        "file:///home/{YOUR USERNAME}/vscode-tweaks/colors.js",
+
+        "file:///home/{YOUR USERNAME}/vscode-tweaks/styles.css",
+
+        "file:///home/{YOUR USERNAME}/vscode-tweaks/out/blur.js",
+        "file:///home/{YOUR USERNAME}/vscode-tweaks/out/modals.js",
+        "file:///home/{YOUR USERNAME}/vscode-tweaks/out/mouseeffects.js",
+        "file:///home/{YOUR USERNAME}/vscode-tweaks/out/overlays.js"
+    ]
 }
 ```
 
@@ -53,7 +63,17 @@ Add the following entries to your `settings.json` file! Make sure to tweak the l
 
 ```json
 {
-    "vscode_custom_css.imports": ["file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-overlays/styles.css", "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-overlays/overlays.js", "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-overlays/modals.js", "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-overlays/mouseeffects.js"]
+    "vscode_custom_css.imports": [
+        // GLOBAL FILE: ALWAYS NEEDS TO BE FIRST
+        "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-tweaks/colors.js",
+
+        "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-tweaks/styles.css",
+
+        "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-tweaks/out/blur.js",
+        "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-tweaks/out/modals.js",
+        "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-tweaks/out/mouseeffects.js",
+        "file:///C:/Users/{YOUR USERNAME}/Downloads/vscode-tweaks/out/overlays.js"
+    ]
 }
 ```
 
@@ -70,11 +90,22 @@ Add the following entries to your `settings.json` file! Make sure to tweak the l
 
 And just like that, you can enjoy the new experience!
 
+## OPTIONAL - Enable the server
+
+There is a local server that enhances the experience even further! Go to the installed directory, and run the following command;
+
+```sh
+npm install # Install the required packages
+npm start # Run the server already!
+```
+
+> **Note:** Since this is a local server, you will need to manually enable it everytime you want to use it. Maintaining a global server is out of our bounds, and it is the only way to use cool useful packages.
+
 ---
 
 ## 🧠 Notes & Troubleshooting
 
-> **NOTE: If VSCode crashes or/and fails to open, a fresh reinstall will fix it.** Just make sure to backup your settings and stuff.
+> **Note: If VSCode crashes or/and fails to open, a fresh reinstall will fix it.** Just make sure to backup your settings and stuff.
 
 ### ⚠️ Linux Permissions
 
@@ -84,33 +115,37 @@ If VSCode complains about permissions, run this:
 sudo chown -R $USER /usr/share/code/
 ```
 
-You must have read/write permission on the VSCode installation for the CSS and JS tweaks to work.
+Change `/usr/share/code/` to where VSCode was installed. You must have read/write permission on the VSCode installation for the CSS and JS tweaks to work.
 
 ### 🔁 After Updates
 
 VSCode breaks these tweaks after updates. If that happens:
 
+- _If you’re on Linux, run the chown command_
 - Re-run the `Ctrl+Shift+P` → `Enable Custom CSS and JS` command
-- _If you’re on Linux, maybe re-run the chown command too if VSCode complains about permissions_
 - Restart VSCode again
 
 ### 🚨 “VSCode installation is corrupted” warning
 
 Don’t panic, it’s totally normal. You can **safely ignore it**. You can click the small cog icon (⚙️), and click **Don't Show Again**. Bye-bye!
 
-### How to Update vscode-overlays
+### Modifying code
+
+Feel free to tweak the CSS and TypeScript files to cherry-pick all the features you may like. There's a very convenient `Overlay` class, so why not add more funny overlays? **However, always remember to run `npx tsc` in the directory after changes in the `/src/` files.** If you forget this step, you will be confused.
+
+### How to Update vscode-tweaks
 
 On Linux;
 
 ```sh
-cd ~/Downloads/vscode-overlays
+cd ~/Downloads/vscode-tweaks
 git pull
 ```
 
-On Windows, you might have to download the files manually on GitHub. Head to 👉 [https://github.com/Lanzoor/vscode-overlays/releases/latest/](https://github.com/Lanzoor/vscode-overlays/releases/latest/) Then click **Source Code (zip)** to download the source code. Unzip it, and replace the old files.
+On Windows, you might have to download the files manually on GitHub. Head to 👉 [https://github.com/Lanzoor/vscode-tweaks/releases/latest/](https://github.com/Lanzoor/vscode-tweaks/releases/latest/) Then click **Source Code (zip)** to download the source code. Unzip it, and replace the old files.
 
 By the way, until I make an automatic update system, you still might want to check frequently for updates. Sorry!
 
 ---
 
-🎉 **And that’s it!** You now have a supercharged, stylish, animated VSCode setup! Feel free to tweak the JS and CSS files yourself to your liking. You can even add your OWN funny overlays!
+🎉 **And that’s it!** You now have a supercharged, stylish, animated VSCode setup!
