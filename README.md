@@ -28,7 +28,11 @@ code --install-extension be5invis.vscode-custom-css
 
 ```sh
 mkdir ~/vscode-tweaks
+cd ~/vscode-tweaks
 git clone https://github.com/Lanzoor/vscode-tweaks.git
+
+npm install # Install the required packages for the server
+npm start # Start the server!
 ```
 
 ### 🪟 On Windows:
@@ -95,7 +99,7 @@ And just like that, you can enjoy the new experience!
 There is a local server that enhances the experience even further! Go to the installed directory, and run the following command;
 
 ```sh
-npm install # Install the required packages
+npm install # Install the required packages, if you haven't already.
 npm start # Run the server already!
 ```
 
@@ -131,15 +135,19 @@ Don’t panic, it’s totally normal. You can **safely ignore it**. You can clic
 
 ### Modifying code
 
-Feel free to tweak the CSS and TypeScript files to cherry-pick all the features you may like. There's a very convenient `Overlay` class, so why not add more funny overlays? **However, always remember to run `npx tsc` in the directory after changes in the `/src/` files.** If you forget this step, you will be confused.
+Feel free to tweak the CSS and TypeScript files to cherry-pick all the features you may like.
+
+**However, always remember to run `npx tsc` in the directory after changes in the `/src/` files.** If you forget this step, you will be confused.
 
 ### How to Update vscode-tweaks
 
 On Linux;
 
 ```sh
-cd ~/Downloads/vscode-tweaks
+cd ~/vscode-tweaks
 git pull
+
+npm install # Maybe re-install the packages again
 ```
 
 On Windows, you might have to download the files manually on GitHub. Head to 👉 [https://github.com/Lanzoor/vscode-tweaks/releases/latest/](https://github.com/Lanzoor/vscode-tweaks/releases/latest/) Then click **Source Code (zip)** to download the source code. Unzip it, and replace the old files.
