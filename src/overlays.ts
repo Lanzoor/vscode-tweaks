@@ -355,8 +355,6 @@ const serverOverlay = new Overlay({
     desc: true,
 });
 
-serverOverlay.setAccent(yellowAccent);
-
 let serverUptime = null;
 
 function updateServer() {
@@ -635,7 +633,7 @@ function updatePing() {
     }
 }
 
-setInterval(updatePing, 500);
+setInterval(updatePing, 1000);
 updatePing();
 
 function updatePingStatus() {

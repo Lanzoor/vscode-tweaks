@@ -27,9 +27,9 @@ code --install-extension be5invis.vscode-custom-css
 ### 🐧 On Linux:
 
 ```sh
-mkdir ~/vscode-tweaks
-cd ~/vscode-tweaks
+cd ~/
 git clone https://github.com/Lanzoor/vscode-tweaks.git
+cd ~/vscode-tweaks/
 
 npm install # Install the required packages for the server
 npx tsc
@@ -100,6 +100,8 @@ And just like that, you can enjoy the new experience!
 There is a local server that enhances the experience even further! Go to the installed directory, and run the following command;
 
 ```sh
+cd ~/vscode-tweaks/
+
 npm install # Install the required packages, if you haven't already.
 npm start # Run the server already!
 ```
@@ -145,7 +147,7 @@ Feel free to tweak the CSS and TypeScript files to cherry-pick all the features 
 On Linux;
 
 ```sh
-cd ~/vscode-tweaks
+cd ~/vscode-tweaks/
 git pull
 
 npm install # Maybe re-install the packages again
