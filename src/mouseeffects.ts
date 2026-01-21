@@ -43,14 +43,14 @@ document.addEventListener('mousemove', (e) => {
         width: '30px',
         height: '30px',
         backgroundColor: `${Colors.dimmerMagenta}`,
-        boxShadow: `0 0 5px ${Colors.dimmerMagenta}, inset 0 0 5px ${Colors.dimmerMagenta}`,
+        boxShadow: `0 0 10px ${Colors.dimmerMagenta}, inset 0 0 5px ${Colors.dimmerMagenta}`,
     };
 
     const idleTrailStyles = {
         width: '10px',
         height: '10px',
         backgroundColor: `${Colors.dimmerCyan}`,
-        boxShadow: `0 0 5px ${Colors.dimmerCyan}, inset 0 0 5px ${Colors.dimmerCyan}`,
+        boxShadow: `0 0 7.5px ${Colors.dimmerCyan}, inset 0 0 5px ${Colors.dimmerCyan}`,
     };
 
     const baseTrailStyles = {
