@@ -1,6 +1,6 @@
 {
     "name": "vscode-tweaks",
-    "version": "26.0003.1",
+    "version": "26.0003.2",
     "description": "Custom VSCode tweaks with a local server",
     "scripts": {
         "start": "./vscode-server/init.sh",
