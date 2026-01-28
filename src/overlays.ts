@@ -5,7 +5,7 @@ const defaultDescStyle = {
     padding: '10px 15px',
     background: 'rgba(30, 30, 30, 0.9)',
     backdropFilter: 'blur(5px)',
-    fontFamily: "'FiraCode Nerd Font', monospace",
+    fontFamily: "'Monaspace Krypton', 'FiraCode Nerd Font', 'JetBrains Mono', Consolas, monospace",
     fontSize: '13px',
     border: `1px solid ${Colors.solidCyan}`,
     borderRadius: '8px',
@@ -29,7 +29,7 @@ const defaultOverlayStyle = {
     padding: '7.5px 15px',
     background: Colors.dimCyan,
     backdropFilter: 'blur(5px)',
-    fontFamily: "'FiraCode Nerd Font', monospace",
+    fontFamily: "'Monaspace Krypton', 'FiraCode Nerd Font', 'JetBrains Mono', Consolas, monospace",
     fontSize: '14px',
     border: `1px solid ${Colors.solidCyan}`,
     borderRadius: '8px',
@@ -408,7 +408,7 @@ Uptime: ${serverUptime}
     }
 }
 
-setInterval(updateServerContent, 500);
+setInterval(updateServerContent, 1000);
 updateServerContent();
 
 serverOverlay.obj.addEventListener('mousedown', () => {
@@ -578,13 +578,70 @@ let weatherLocationFailurePrompt = `Couldn't fetch current user location!
 let weatherInformationFailurePrompt = `Couldn't fetch weather information!
 <span class="highlight-glow">Click to retry server connection</span>`;
 
+let highlightOpen = '<span class="highlight-glow">';
+
+type PMDescription = {
+    solid: string;
+    light: string;
+    descriptor: string;
+};
+
+function gradePMLevels(pmValue: number): PMDescription {
+    if (typeof pmValue !== 'number' || isNaN(pmValue)) {
+        return {
+            solid: Colors.solidRed,
+            light: Colors.lightRed,
+            descriptor: 'Unavailable',
+        };
+    }
+
+    if (pmValue < 15) {
+        return {
+            solid: Colors.solidCyan,
+            light: Colors.lightCyan,
+            descriptor: 'Excellent',
+        };
+    } else if (pmValue >= 15 && pmValue < 30) {
+        return {
+            solid: Colors.solidGreen,
+            light: Colors.lightGreen,
+            descriptor: 'Great',
+        };
+    } else if (pmValue >= 30 && pmValue < 50) {
+        return {
+            solid: Colors.solidYellow,
+            light: Colors.lightYellow,
+            descriptor: 'Fair',
+        };
+    } else if (pmValue >= 50 && pmValue < 75) {
+        return {
+            solid: Colors.solidRed,
+            light: Colors.lightRed,
+            descriptor: 'Moderate',
+        };
+    } else if (pmValue >= 75) {
+        return {
+            solid: Colors.solidMagenta,
+            light: Colors.lightMagenta,
+            descriptor: 'Severe',
+        };
+    }
+}
+
 function updateWeatherContent() {
     if (availableWeather && availableLocation) {
-        let weatherSuccessPrompt = `🌡️ ${temperature}°C 💦 ${humidity}%
-💨 ${windSpeed}m/s @ ${windDirection}° (${windDirectionDescriptor})
-🌤️ <span class="highlight-glow">${weatherDescriptor}</span>
-🌫️ <span class="highlight-glow">PM10</span> ${pm10}µg/m³ <span class="highlight-glow">PM2.5</span> ${pm2_5}µg/m³
-<span class="highlight-glow">Click to refresh weather content</span>`;
+        let pm10Object: PMDescription = gradePMLevels(pm10);
+        let pm10SpanOpen = `<span style="color: ${pm10Object.solid}; text-shadow: 0 0 20px ${pm10Object.light}">`;
+
+        let pm2_5Object: PMDescription = gradePMLevels(pm2_5);
+        let pm2_5SpanOpen = `<span style="color: ${pm2_5Object.solid}; text-shadow: 0 0 20px ${pm2_5Object.light}">`;
+
+        let tempHumidDescription = `🌡️ ${temperature}°C 💦 ${humidity}%`;
+        let windDescription = `💨 ${windSpeed}m/s @ ${windDirection}° (${windDirectionDescriptor})`;
+        let weatherDescription = `🌤️ ${highlightOpen}${weatherDescriptor}</span>`;
+        let pmDescription = `🌫️ PM10: ${pm10SpanOpen}${pm10}µg/m³</span> (${pm10Object.descriptor})
+🌫️ PM2.5: ${pm2_5SpanOpen}${pm2_5}µg/m³</span> (${pm2_5Object.descriptor})`;
+        let weatherSuccessPrompt = tempHumidDescription + '\n' + windDescription + '\n' + weatherDescription + '\n' + pmDescription + '\n' + `${highlightOpen}Click to refresh weather content</span>`;
 
         weatherOverlay.setDescHTML(weatherSuccessPrompt);
     } else {
@@ -596,7 +653,7 @@ function updateWeatherContent() {
     }
 }
 
-setInterval(updateWeatherContent, 500);
+setInterval(updateWeatherContent, 1000);
 updateWeatherContent();
 
 weatherOverlay.obj.addEventListener('mousedown', () => {
@@ -663,7 +720,7 @@ function updatePingContent() {
     }
 }
 
-setInterval(updatePingContent, 500);
+setInterval(updatePingContent, 1000);
 updatePingContent();
 
 pingOverlay.obj.addEventListener('mouseenter', () => {
@@ -798,8 +855,9 @@ Object.assign(fpsDisplay.style, {
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: '20001',
-    fontFamily: "'FiraCode Nerd Font', monospace",
+    fontFamily: "'Monaspace Krypton', 'FiraCode Nerd Font', 'JetBrains Mono', Consolas, monospace",
     fontSize: '20px',
+    transition: 'color 0.5s ease, text-shadow 0.5s ease',
 });
 
 document.body.appendChild(fpsDisplay);
@@ -807,20 +865,28 @@ document.body.appendChild(fpsDisplay);
 function updateFPSLoop() {
     const now = performance.now();
     frameCount++;
-    if (now - lastUpdateTime >= 250) {
+    if (now - lastUpdateTime >= 500) {
         const fps: number = Number(((frameCount * 1000) / (now - lastUpdateTime)).toFixed(2));
 
         fpsDisplay.textContent = `${fps} FPS`;
-        if (fps <= 30) {
+
+        if (fps <= 15) {
+            fpsDisplay.style.color = Colors.solidMagenta;
+            fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightMagenta}`;
+        } else if (fps > 15 && fps <= 30) {
             fpsDisplay.style.color = Colors.solidRed;
             fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightRed}`;
         } else if (fps > 30 && fps <= 45) {
             fpsDisplay.style.color = Colors.solidYellow;
             fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightYellow}`;
-        } else {
+        } else if (fps > 45 && fps < 60) {
             fpsDisplay.style.color = Colors.solidGreen;
             fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightGreen}`;
+        } else if (fps >= 60) {
+            fpsDisplay.style.color = Colors.solidCyan;
+            fpsDisplay.style.textShadow = `0 0 20px ${Colors.lightCyan}`;
         }
+
         frameCount = 0;
         lastUpdateTime = now;
     }
