@@ -786,14 +786,14 @@ Object.assign(levelProgressLine.style, {
 });
 
 function getCurrentLevelStatus() {
-    let baseLevel = 500;
+    let baseLevel = 100;
     let copyKeyCount = totKeyCount;
     let level = 0;
     while (true) {
         if (copyKeyCount >= baseLevel) {
             copyKeyCount -= baseLevel;
             level++;
-            baseLevel += 50;
+            baseLevel += 100;
         } else {
             return [level, copyKeyCount, baseLevel];
         }

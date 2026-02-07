@@ -33,7 +33,7 @@ Object.assign(modalContainer.style, {
     position: 'fixed',
     inset: '0',
     backgroundColor: 'rgba(33, 23, 89, 0.5)',
-    backdropFilter: 'blur(25px)',
+    backdropFilter: 'blur(5px)',
     zIndex: '20001',
     color: 'white',
     cursor: 'pointer',

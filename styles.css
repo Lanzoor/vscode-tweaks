@@ -3,6 +3,10 @@
     top: -6px !important;
 }
 
+.monaco-editor .selected-text {
+    box-shadow: inset 0 0 10px #ffffff75 !important;
+}
+
 .monaco-editor .highlight {
     animation: blurpleGlow 10s infinite ease !important;
 }
